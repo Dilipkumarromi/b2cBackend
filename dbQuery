@@ -1,0 +1,302 @@
+CREATE TABLE `customer_entity` (
+  `customer_entity_id` int PRIMARY KEY AUTO_INCREMENT,
+  `first_name` varchar(255),
+  `last_name` varchar(255),
+  `gender` varchar(255),
+  `email` varchar(255),
+  `mobile` integer,
+  `alternative_n0` integer,
+  `profile_photo` varchar(255),
+  `isVerify` boolean,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `customer_address` (
+  `customer_address_id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_entity_id` int,
+  `street` varchar(255),
+  `city` varchar(255),
+  `distric` varchar(255),
+  `state` varchar(255),
+  `zip` integer,
+  `isVerify` boolean,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `admin_user` (
+  `admin_user_id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_entity_id` integer,
+  `first_name` varchar(255),
+  `last_name` varchar(255),
+  `email` varchar(255),
+  `mobile` integer,
+  `username` varchar(255),
+  `salt_key` varchar(255),
+  `password` varchar(255),
+  `isVerify` boolean,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `authorization_role` (
+  `authorization_role_id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_entity_id` integer,
+  `admin_user_id` integer,
+  `role_name` varchar(255),
+  `role_type` varchar(255),
+  `role_id` integer,
+  `isVerify` boolean,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `customer_activity` (
+  `customer_activity_id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_entity_id` integer,
+  `customer_interest_log` varchar(255),
+  `product_item_id` integer,
+  `customer_type` varchar(255),
+  `isPurchase` boolean,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `product_categories` (
+  `product_categories_id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_entity_id` integer,
+  `max_price` integer,
+  `mix_price` integer,
+  `tier` integer,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `product_item` (
+  `product_item_id` int PRIMARY KEY AUTO_INCREMENT,
+  `product_catelog_id` integer,
+  `customer_entity_id` integer,
+  `werehouse_id` integer,
+  `item_image` integer,
+  `max_price` integer,
+  `mix_price` integer,
+  `qty` integer,
+  `price` integer,
+  `expire_date` varchar(255),
+  `discount` integer,
+  `coupons` varchar(255),
+  `tier` integer,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `items_images` (
+  `items_images_id` int PRIMARY KEY AUTO_INCREMENT,
+  `product_categories_id` integer,
+  `product_item_id` integer,
+  `image` varchar(255),
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `product_catelog` (
+  `product_catelog_id` int PRIMARY KEY AUTO_INCREMENT,
+  `product_categories_id` integer,
+  `customer_entity_id` integer,
+  `product_catelog_type` integer,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `werehouse_details` (
+  `werehouse_details_id` int PRIMARY KEY AUTO_INCREMENT,
+  `werehouse_name` varchar(255),
+  `street` varchar(255),
+  `city` varchar(255),
+  `distric` varchar(255),
+  `state` varchar(255),
+  `zip` varchar(255),
+  `contact_no` varchar(255),
+  `email` varchar(255),
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `wishlists` (
+  `wishlists_id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_entity_id` integer,
+  `items` varchar(255),
+  `qty` integer,
+  `price` integer,
+  `coupons` varchar(255),
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `sales_order` (
+  `sales_order_id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_entity_id` integer,
+  `product_item_id` integer,
+  `items_images_id` integer,
+  `isOrdereConfirm` boolean,
+  `isPaymentDone` boolean,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `order_shipment_address` (
+  `order_shipment_address_id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_entity_id` integer,
+  `first_name` varchar(255),
+  `last_name` varchar(255),
+  `street` varchar(255),
+  `landmark` varchar(255),
+  `city` varchar(255),
+  `distric` varchar(255),
+  `state` varchar(255),
+  `zip` varchar(255),
+  `contact_no` integer,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `order_billings` (
+  `order_billing_id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_entity_id` integer,
+  `order_shipment_address_id` integer,
+  `product_item_id` integer,
+  `billing_status` varchar(255),
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `saller_details` (
+  `saller_details_id` int PRIMARY KEY AUTO_INCREMENT,
+  `product_item_id` integer,
+  `customer_entity_id` integer,
+  `items_images_id` integer,
+  `order_shipment_address_id` integer,
+  `isConfirmOrder` boolean,
+  `isDispached` boolean,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `courier_tracking` (
+  `courier_tracking_id` int PRIMARY KEY AUTO_INCREMENT,
+  `customer_entity_id` integer,
+  `order_shipment_address_id` integer,
+  `product_item_id` integer,
+  `docket_no` varchar(255),
+  `curier_partner_name` varchar(255),
+  `curier_partner_contact_no` integer,
+  `shipment_date_time` varchar(255),
+  `delivery_date_time` varchar(255),
+  `isConfrmDispatch` boolean,
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `product_sub_category` (
+  `product_sub_category_id` int PRIMARY KEY AUTO_INCREMENT,
+  `product_item_id` integer,
+  `product_categories_id` integer,
+  `items_name` varchar(255),
+  `items_type` varchar(255),
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `product_category_tier` (
+  `product_category_tier_id` int PRIMARY KEY AUTO_INCREMENT,
+  `product_item_id` integer,
+  `product_categories_id` integer,
+  `items_tierType` varchar(255),
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+CREATE TABLE `product_filter` (
+  `product_filter_id` int PRIMARY KEY AUTO_INCREMENT,
+  `product_item_id` integer,
+  `product_categories_id` integer,
+  `product_category_tier_id` integer,
+  `product_sub_category_id` integer,
+  `items_alises` varchar(255),
+  `items_tag` varchar(255),
+  `isActive` boolean,
+  `datetime` datetime
+);
+
+ALTER TABLE `admin_user` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `customer_entity` (`customer_entity_id`);
+
+ALTER TABLE `authorization_role` ADD FOREIGN KEY (`admin_user_id`) REFERENCES `admin_user` (`admin_user_id`);
+
+ALTER TABLE `authorization_role` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `customer_entity` (`customer_entity_id`);
+
+ALTER TABLE `customer_activity` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `customer_entity` (`customer_entity_id`);
+
+ALTER TABLE `customer_address` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `customer_entity` (`customer_entity_id`);
+
+ALTER TABLE `product_categories` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `customer_entity` (`customer_entity_id`);
+
+ALTER TABLE `product_item` ADD FOREIGN KEY (`product_catelog_id`) REFERENCES `product_categories` (`product_categories_id`);
+
+ALTER TABLE `product_item` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `customer_entity` (`customer_entity_id`);
+
+ALTER TABLE `items_images` ADD FOREIGN KEY (`product_item_id`) REFERENCES `product_item` (`product_item_id`);
+
+ALTER TABLE `items_images` ADD FOREIGN KEY (`product_categories_id`) REFERENCES `product_categories` (`product_categories_id`);
+
+ALTER TABLE `product_catelog` ADD FOREIGN KEY (`product_categories_id`) REFERENCES `product_categories` (`product_categories_id`);
+
+ALTER TABLE `product_catelog` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `customer_entity` (`customer_entity_id`);
+
+ALTER TABLE `product_item` ADD FOREIGN KEY (`werehouse_id`) REFERENCES `werehouse_details` (`werehouse_details_id`);
+
+ALTER TABLE `product_item` ADD FOREIGN KEY (`werehouse_id`) REFERENCES `wishlists` (`wishlists_id`);
+
+ALTER TABLE `wishlists` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `customer_entity` (`customer_entity_id`);
+
+ALTER TABLE `sales_order` ADD FOREIGN KEY (`product_item_id`) REFERENCES `product_item` (`product_item_id`);
+
+ALTER TABLE `sales_order` ADD FOREIGN KEY (`items_images_id`) REFERENCES `items_images` (`items_images_id`);
+
+ALTER TABLE `customer_entity` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `order_shipment_address` (`customer_entity_id`);
+
+ALTER TABLE `customer_entity` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `order_billings` (`customer_entity_id`);
+
+ALTER TABLE `order_shipment_address` ADD FOREIGN KEY (`order_shipment_address_id`) REFERENCES `order_billings` (`order_shipment_address_id`);
+
+ALTER TABLE `product_item` ADD FOREIGN KEY (`product_item_id`) REFERENCES `order_billings` (`product_item_id`);
+
+ALTER TABLE `customer_entity` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `saller_details` (`customer_entity_id`);
+
+ALTER TABLE `product_item` ADD FOREIGN KEY (`product_item_id`) REFERENCES `saller_details` (`product_item_id`);
+
+ALTER TABLE `items_images` ADD FOREIGN KEY (`items_images_id`) REFERENCES `saller_details` (`items_images_id`);
+
+ALTER TABLE `order_shipment_address` ADD FOREIGN KEY (`order_shipment_address_id`) REFERENCES `saller_details` (`order_shipment_address_id`);
+
+ALTER TABLE `customer_entity` ADD FOREIGN KEY (`customer_entity_id`) REFERENCES `courier_tracking` (`customer_entity_id`);
+
+ALTER TABLE `product_item` ADD FOREIGN KEY (`product_item_id`) REFERENCES `courier_tracking` (`product_item_id`);
+
+ALTER TABLE `order_shipment_address` ADD FOREIGN KEY (`order_shipment_address_id`) REFERENCES `courier_tracking` (`order_shipment_address_id`);
+
+ALTER TABLE `product_item` ADD FOREIGN KEY (`product_item_id`) REFERENCES `product_sub_category` (`product_item_id`);
+
+ALTER TABLE `product_categories` ADD FOREIGN KEY (`product_categories_id`) REFERENCES `product_sub_category` (`product_categories_id`);
+
+ALTER TABLE `product_item` ADD FOREIGN KEY (`product_item_id`) REFERENCES `product_category_tier` (`product_item_id`);
+
+ALTER TABLE `product_categories` ADD FOREIGN KEY (`product_categories_id`) REFERENCES `product_category_tier` (`product_categories_id`);
+
+ALTER TABLE `product_item` ADD FOREIGN KEY (`product_item_id`) REFERENCES `product_filter` (`product_item_id`);
+
+ALTER TABLE `product_categories` ADD FOREIGN KEY (`product_categories_id`) REFERENCES `product_filter` (`product_categories_id`);
+
+ALTER TABLE `product_category_tier` ADD FOREIGN KEY (`product_category_tier_id`) REFERENCES `product_filter` (`product_category_tier_id`);
+
+ALTER TABLE `product_sub_category` ADD FOREIGN KEY (`product_sub_category_id`) REFERENCES `product_filter` (`product_sub_category_id`);
