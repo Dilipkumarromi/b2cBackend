@@ -35,7 +35,13 @@ const sequelize=new Sequelize(database,user,password,{
   db.Sequelize = Sequelize
   db.sequelize=sequelize
 
-//   db.CourseModels=require('../Models/CourseModels')(sequelize,DataTypes)
+  db.customer_entity=require('../Model/customer_entityModel')(sequelize,DataTypes)
+  db.customer_addressModel=require('../Model/customer_addressModel')(sequelize,DataTypes)
+  db.admin_user=require('../Model/admin_userModel')(sequelize,DataTypes)
+  db.authorization_role=require('../Model/authorization_roleModel')(sequelize,DataTypes)
+  db.customer_activity=require('../Model/customer_activityModel')(sequelize,DataTypes)
+  db.categories=require('../Model/categoryModel')(sequelize,DataTypes)
+
 
      
   db.sequelize.sync()
