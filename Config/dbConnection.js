@@ -12,13 +12,13 @@ const sequelize=new Sequelize(database,user,password,{
     dialect: 'mysql',  
     dialectOptions: {
         // Observe the need for this nested `options` field for MSSQL
-        options: {
-          // Your tedious options here
-          useUTC: false,
-          dateFirst: 1,
-          encrypt: false
+        // options: {
+        //   // Your tedious options here
+        //   useUTC: false,
+        //   dateFirst: 1,
+        //   encrypt: false
           
-        }
+        // }
         
       }
       
@@ -88,7 +88,7 @@ const sequelize=new Sequelize(database,user,password,{
      
   db.sequelize.sync()
   .then(() => {
-      console.log("MyDB:- Re-sync")
+      console.log("MyDB Re-sync")
       
   })
 module.exports=db
